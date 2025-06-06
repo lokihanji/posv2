@@ -20,6 +20,8 @@ use App\Http\Livewire\LaravelExamples\UserManagement;
 use App\Http\Livewire\Buttons\SampleButtons;
 use App\Http\Livewire\Inputs\SampleInputs;
 use App\Http\Livewire\Table\SampleTable;
+use App\Http\Livewire\Alert\SampleAlert;
+
 
 use Illuminate\Http\Request;
 
@@ -54,6 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/buttons', SampleButtons::class)->name('buttons.sample-buttons');
     Route::get('/inputs', SampleInputs::class)->name('inputs.sample-inputs');
     Route::get('/table', SampleTable::class)->name('table.sample-table');
+    Route::get('/alert', SampleAlert::class)->name('alert.sample-alert');
 
     Route::get('/static-sign-in', StaticSignIn::class)->name('sign-in');
     Route::get('/static-sign-up', StaticSignUp::class)->name('static-sign-up');

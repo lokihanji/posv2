@@ -18,6 +18,7 @@
         'solid' => "btn-$type",
         'ghost' => "btn btn-outline-$type border-0 bg-transparent",
         'link' => "btn btn-link text-$type",
+        'gradient' =>"btn bg-gradient-$type",
         default => "btn-outline-$type",
     };
 
