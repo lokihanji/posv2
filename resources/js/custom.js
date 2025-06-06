@@ -432,11 +432,11 @@ function sidenavTypeOnResize() {
   }
 }
 
-// Modal handling for Livewire
-window.addEventListener('close-modal', event => {
-    const modal = document.getElementById('userModal');
-    const bootstrapModal = bootstrap.Modal.getInstance(modal);
-    if (bootstrapModal) {
-        bootstrapModal.hide();
-    }
-});
+// // Modal handling for Livewire
+// window.addEventListener('close-modal', event => {
+//     const modal = document.getElementById('userModal');
+//     const bootstrapModal = bootstrap.Modal.getInstance(modal);
+//     if (bootstrapModal) {
+//         bootstrapModal.hide();
+//     }
+// });

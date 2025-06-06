@@ -214,9 +214,10 @@
     </div>
 
     <!-- Add the modal component at the end of the file -->
-    <x-modal 
+    <x-modals.modal 
         id="userModal" 
         title="Add New User"
+        size="lg"
     >
         <div class="p-4">
             <div class="mb-3">
@@ -237,5 +238,5 @@
                 </select>
             </div>
         </div>
-    </x-modal>
+    </x-modals.modal>
 </div>

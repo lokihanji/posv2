@@ -37,3 +37,8 @@
         </div>
     </div>
 </div> 
+<style>
+    .modal-backdrop {
+        z-index: 1040;
+    }
+</style> 
