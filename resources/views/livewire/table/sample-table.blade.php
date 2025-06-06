@@ -1,6 +1,6 @@
 <div>
 
-    <x-card size="lg"  columns="1" header="Sample Table">
+    <x-card size="lg"  columns="1" header="Product Table">
         @php
             $headers = [
                 ['label' => 'Product'],
@@ -51,7 +51,7 @@
         <x-table.product-sales-table :headers="$headers" :products="$products" sort="most_sold" />
 
     </x-card>
-    <x-card size="lg"  columns="1" header="Sample Table">
+    <x-card size="lg"  columns="1" header="Users Table">
         @php
             $headers = [
                 ['label' => 'Author'],
@@ -82,7 +82,7 @@
 
     </x-card>
 
-     <x-card size="lg"  columns="1" header="Sample Table">
+     <x-card size="lg"  columns="1" header="Ambot Table">
       
         @php
         $headers = [
