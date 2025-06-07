@@ -39,6 +39,7 @@
             <input
                 type="{{ $type }}"
                 name="{{ $name }}"
+                wire:model="{{ $name }}"
                 id="{{ $id }}"
                 value="{{ old($name, $value) }}"
                 placeholder="{{ $placeholder }}"
@@ -50,6 +51,7 @@
         <input
             type="{{ $type }}"
             name="{{ $name }}"
+            wire:model="{{ $name }}"
             id="{{ $id }}"
             value="{{ old($name, $value) }}"
             placeholder="{{ $placeholder }}"

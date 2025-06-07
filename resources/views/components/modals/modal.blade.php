@@ -1,10 +1,11 @@
 @props([
     'id' => 'modal',
     'title' => '',
+    'showFooter' => true,
     'showSaveButton' => true,
     'saveButtonText' => 'SAVE USER',
     'closeButtonText' => 'CLOSE',
-    'size' => 'default'
+    'size' => 'default',
 ])
 
 @php
@@ -21,24 +22,31 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="{{ $id }}Label">{{ $title }}</h5>
-                <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <div class="modal-body">
                 {{ $slot }}
             </div>
+
+            @if($showFooter)
             <div class="modal-footer">
-                <button type="button" class="btn btn-link text-secondary text-uppercase" data-bs-dismiss="modal">{{ $closeButtonText }}</button>
-                @if($showSaveButton)
-                    <button type="button" class="btn bg-gradient-primary text-uppercase ms-3" wire:click="save">{{ $saveButtonText }}</button>
+                {{-- If a footer slot is provided, show it; otherwise show default buttons --}}
+                @if (isset($footer))
+                    {{ $footer }}
+                @else
+                    <button type="button" class="btn btn-link text-secondary text-uppercase" data-bs-dismiss="modal">
+                        {{ $closeButtonText }}
+                    </button>
+
+                    @if ($showSaveButton)
+                        <button type="button" class="btn bg-gradient-primary text-uppercase ms-3" wire:click="save">
+                            {{ $saveButtonText }}
+                        </button>
+                    @endif
                 @endif
             </div>
+            @endif
         </div>
     </div>
-</div> 
-<style>
-    .modal-backdrop {
-        z-index: 1040;
-    }
-</style> 
+</div>

@@ -38,10 +38,10 @@
                         </span>
                     </td>
                      <td class="align-middle text-center">
-                        <button class="btn btn-link text-info" title="Edit">
+                        <button class="btn btn-link text-info" data-bs-toggle="modal" data-bs-target="#editProduct" wire:click="editProduct({{ $product['id'] }})" title="Edit">
                             <i class="fa fa-edit text-xs"></i>
                         </button>
-                        <button class="btn btn-link text-danger" title="Delete">
+                        <button class="btn btn-link text-danger" data-bs-toggle="modal" data-bs-target="#deleteProduct" title="Delete">
                             <i class="fa fa-trash text-xs"></i>
                         </button>
                        

@@ -67,7 +67,37 @@
                     </g>'"
             />
 
+            <x-sidebar-header title="Procucts" />
+                <x-sidebar-item 
+                    route="{{ route('products.product-management') }}"
+                    title="Product Management"
+                    :isActive="Route::currentRouteName() == 'product-management'"
+                    :isCustomIcon="true"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <path d="M3 9h18M9 21V9"/>
+                    </svg>
+                </x-sidebar-item>
+{{-- 
+                <x-sidebar-item 
+                    route="{{ route('products.product-management') }}"
+                    title="Product Management"
+                    :isActive="Route::currentRouteName() == 'product-management'"
+                    :isCustomIcon="true"
+                    :icon="'<title>Product Management</title>
+                        <g fill=\'none\' fill-rule=\'evenodd\' stroke=\'none\' stroke-width=\'1\'>
+                            <g transform=\'translate(2.000000, 2.000000)\' stroke=\'#FFFFFF\' stroke-width=\'2\'>
+                                <rect x=\'1\' y=\'3\' width=\'18\' height=\'14\' rx=\'2\'></rect>
+                                <path d=\'M1 7 L19 7\'></path>
+                                <path d=\'M7 11 L7 14\'></path>
+                                <path d=\'M13 11 L13 14\'></path>
+                            </g>
+                        </g>'"
+                /> --}}
+
             <x-sidebar-header title="Example pages" />
+            
 
             {{-- <x-sidebar-item 
                 route="{{ route('tables') }}"
