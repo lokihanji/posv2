@@ -2,8 +2,10 @@
     'size' => 'md',
     'color' => 'white',
     'columns' => null,
-    'header' => null
+    'header' => null,
 ])
+
+{{-- No need for @aware here; slots are accessible via $attributes --}}
 
 @php
     $sizeClasses = match($size) {
@@ -27,10 +29,17 @@
     $gridClass = $columns ? 'row row-cols-' . $columns . ' g-3' : '';
 @endphp
 
-<div class="card {{ $colorClasses }} mt-5">
+<div {{ $attributes->merge(['class' => "card $colorClasses"]) }}>
+
+
     @if($header)
-        <div class="card-header border-bottom">
+        <div class="card-header border-bottom d-flex justify-content-between align-items-center">
             <h5 class="mb-0">{{ $header }}</h5>
+
+            {{-- Render headerActions only if slot is provided --}}
+            <div class="d-flex justify-content-end align-items-center gap-2">
+            {{ $headerActions ?? '' }}
+            </div>
         </div>
     @endif
 
@@ -39,4 +48,5 @@
             {{ $slot }}
         </div>
     </div>
+
 </div>

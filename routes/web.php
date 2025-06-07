@@ -22,6 +22,9 @@ use App\Http\Livewire\Inputs\SampleInputs;
 use App\Http\Livewire\Table\SampleTable;
 use App\Http\Livewire\Alert\SampleAlert;
 
+//============Pages============//
+use App\Http\Livewire\Products\ProductManagement;
+
 
 use Illuminate\Http\Request;
 
@@ -63,5 +66,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/rtl', Rtl::class)->name('rtl');
     Route::get('/laravel-user-profile', UserProfile::class)->name('user-profile');
     Route::get('/laravel-user-management', UserManagement::class)->name('user-management');
+
+    //====================================Pages================================================//
+    
+    Route::get('/products', ProductManagement::class)->name('products.product-management');
 });
 

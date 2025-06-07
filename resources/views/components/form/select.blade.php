@@ -9,7 +9,6 @@
     'size' => null, // sm, lg
     'multiple' => false,
     'disabled' => false,
-    'value' => null,
 ])
 
 @php
@@ -22,8 +21,6 @@
     };
 
     $sizeClass = $size === 'sm' ? 'form-control-sm' : ($size === 'lg' ? 'form-control-lg' : '');
-
-    $selectedValues = is_array($value) ? $value : [$value];
 @endphp
 
 <div class="form-group">
@@ -32,7 +29,8 @@
     @endif
 
     <select
-        name="{{ $name }}{{ $multiple ? '[]' : '' }}" class="form-control"
+        name="{{ $name }}{{ $multiple ? '[]' : '' }}"
+        wire:model="{{ $name }}"
         id="{{ $id }}"
         {{ $multiple ? 'multiple' : '' }}
         {{ $disabled ? 'disabled' : '' }}
@@ -43,9 +41,11 @@
         @endif
 
         @foreach($options as $option)
-            <option value="{{ $option['value'] }}" {{ in_array($option['value'], $selectedValues) ? 'selected' : '' }}>
-                {{ $option['label'] }}
-            </option>
+            @if(is_array($option) && isset($option['label'], $option['value']))
+                <option value="{{ $option['value'] }}">
+                    {{ $option['label'] }}
+                </option>
+            @endif
         @endforeach
     </select>
 </div>
@@ -54,10 +54,9 @@
 <style>
     @import url('https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css');
 
-    /* Override Choices.js border styles to match Bootstrap form-control */
     .choices__inner {
-        border-radius: 0.375rem; /* Same as .form-control */
-        border: 1px solid #ced4da; /* Match Bootstrap's default input border */
+        border-radius: 0.375rem;
+        border: 1px solid #ced4da;
         min-height: auto;
         padding: 0.375rem 0.75rem;
         font-size: 1rem;
@@ -66,7 +65,7 @@
 
     .choices__inner:focus,
     .choices__inner.is-focused {
-        border-color: #5e72e4; /* Match your focused border color */
+        border-color: #5e72e4;
         box-shadow: 0 0 0 0.2rem rgba(94, 114, 228, 0.25);
     }
 
@@ -96,7 +95,13 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById(@js($id));
-        if (el && !el.classList.contains('choices-initialized')) {
+
+        // Only initialize Choices.js if NOT used with Livewire
+        if (
+            el &&
+            !el.classList.contains('choices-initialized') &&
+            !el.hasAttribute('wire:model')
+        ) {
             new Choices(el, {
                 searchEnabled: {{ $searchable ? 'true' : 'false' }},
                 itemSelectText: '',
