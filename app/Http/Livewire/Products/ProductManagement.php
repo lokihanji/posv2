@@ -10,10 +10,11 @@ use Illuminate\Validation\Rule;
 
 class ProductManagement extends Component
 {
+    public $editingRow = null;
    
     public $categoryName;
-    public $categoryStatus ;
-    public $closeCategoryModal =false;
+    public $categoryStatus;
+    public $closeCategoryModal = false;
 
     public $itemName;
     public $itemCategoryId;
@@ -240,6 +241,10 @@ class ProductManagement extends Component
             $this->productStatus = 'active';
             $this->productDescription = '';
 
+            $this->mount(); // Refresh data
+            session()->flash('message', 'Product created successfully!');
+            session()->flash('type', 'success');
+
         } catch (\Exception $e) {
             logger()->error('Error saving product:', [
                 'error' => $e->getMessage(),
@@ -250,8 +255,10 @@ class ProductManagement extends Component
         }
     }
 // ========================End Save Data========================//
-// ========================End Edit Data========================//
-    public function editProduct($id){
+
+// ========================Start Edit Data========================//
+    public function editProduct($id)
+    {
         $product = Product::find($id);
         $this->editProductName = $product->name;
         $this->editProductSku = $product->sku;
@@ -260,7 +267,53 @@ class ProductManagement extends Component
         $this->editProductQuantity = $product->stock;
         $this->editProductStatus = $product->status;
         $this->editProductDescription = $product->description;
-
-        $this->dispatchBrowserEvent('show-edit-modal');
+        $this->editingRow = $id;
     }
+
+    public function updateProduct()
+    {
+        try {
+            $this->validate([
+                'editProductName' => ['required', 'string', 'max:255'],
+                'editProductSku' => ['required', 'string', 'max:255'],
+                'editProductItemId' => ['required', 'string', 'max:255'],
+                'editProductPrice' => ['required', 'numeric', 'min:0'],
+                'editProductQuantity' => ['required', 'integer', 'min:0'],
+                'editProductStatus' => ['required', 'string', 'max:255'],
+                'editProductDescription' => ['nullable', 'string'],
+            ]);
+
+            $product = Product::find($this->editingRow);
+            $product->update([
+                'name' => $this->editProductName,
+                'sku' => $this->editProductSku,
+                'item_id' => $this->editProductItemId,
+                'price' => $this->editProductPrice,
+                'stock' => $this->editProductQuantity,
+                'status' => $this->editProductStatus,
+                'description' => $this->editProductDescription,
+            ]);
+
+            $this->editingRow = null;
+            $this->editProductName = '';
+            $this->editProductSku = '';
+            $this->editProductItemId = '';
+            $this->editProductPrice = 0;
+            $this->editProductQuantity = 0;
+            $this->editProductStatus = 'active';
+            $this->editProductDescription = '';
+
+            session()->flash('message', 'Product updated successfully!');
+            session()->flash('type', 'success');
+
+        } catch (\Exception $e) {
+            logger()->error('Error updating product:', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            session()->flash('message', 'Error updating product: ' . $e->getMessage());
+            session()->flash('type', 'danger');
+        }
+    }
+// ========================End Edit Data========================//
 }

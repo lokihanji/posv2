@@ -1,65 +1,69 @@
-<x-modals.modal 
-    id="editProduct" 
-    title="Update Product"
-    size="lg"
->
-    <x-card size="lg" columns="1">
+<div class="modal fade" id="editProduct" tabindex="-1" role="dialog" aria-labelledby="editProductLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProductLabel">Edit Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form wire:submit.prevent="updateProduct">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editProductName" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="editProductName" wire:model="editProductName">
+                        @error('editProductName') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="editProductSku" class="form-label">SKU</label>
+                        <input type="text" class="form-control" id="editProductSku" wire:model="editProductSku">
+                        @error('editProductSku') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
 
-        {{-- Product Name --}}
-        <div class="col">
-            <x-form.input wire:model="editProductName" name="editProductName" label="Product Name"/>
+                    <div class="mb-3">
+                        <label for="editProductItemId" class="form-label">Item</label>
+                        <select class="form-select" id="editProductItemId" wire:model="editProductItemId">
+                            <option value="">Select Item</option>
+                            @foreach($items as $item)
+                                <option value="{{ $item['value'] }}">{{ $item['label'] }}</option>
+                            @endforeach
+                        </select>
+                        @error('editProductItemId') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="editProductPrice" class="form-label">Price</label>
+                        <input type="number" step="0.01" class="form-control" id="editProductPrice" wire:model="editProductPrice">
+                        @error('editProductPrice') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="editProductQuantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="editProductQuantity" wire:model="editProductQuantity">
+                        @error('editProductQuantity') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="editProductStatus" class="form-label">Status</label>
+                        <select class="form-select" id="editProductStatus" wire:model="editProductStatus">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                        @error('editProductStatus') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editProductDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="editProductDescription" wire:model="editProductDescription" rows="3"></textarea>
+                        @error('editProductDescription') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
         </div>
-
-        {{-- SKU (Stock Keeping Unit)--}}
-        <div class="col">
-            <x-form.input wire:model="editProductSku" name="editProductSku" label="Stock Keeping Unit" />
-        </div>
-
-        {{-- Item Dropdown --}}
-        <div class="col">
-            <x-form.select
-                wire:model="editProductItemId"
-                name="editProductItemId"
-                label="Item"
-                :options="$items"
-                option-label="label"
-                option-value="value"
-                searchable="true"
-            />
-        </div>
-
-        {{-- Price --}}
-        <div class="col">
-            <x-form.input wire:model="editProductPrice" name="editProductPrice" label="Price" type="number" step="0.01" />
-        </div>
-
-        {{-- Quantity --}}
-        <div class="col">
-            <x-form.input wire:model="editProductQuantity" name="editProductQuantity" label="Quantity" type="number" />
-        </div>
-
-        {{-- Status --}}
-        <div class="col">
-            <x-form.select
-                wire:model="editProductStatus"
-                name="editProductStatus"
-                label="Status"
-                :options="[
-                    ['label' => 'Active', 'value' => 'active'],
-                    ['label' => 'Inactive', 'value' => 'inactive'],
-                ]"
-            />
-        </div>
-
-        {{-- Description --}}
-        <div class="col col-span-2">
-            <x-form.textarea wire:model="editProductDescription" name="editProductDescription" label="Description" rows="3" />
-        </div>
-
-    </x-card>
-
-    <x-slot name="footer">
-        <x-custom-buttons.button data-bs-dismiss="modal" type="danger" variant="gradient" label="Cancel" />
-        <x-custom-buttons.button data-bs-dismiss="modal" wire:click="updateProduct" type="primary" variant="gradient" label="Save Changes" />
-    </x-slot>
-</x-modals.modal>
+    </div>
+</div> 
